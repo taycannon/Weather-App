@@ -14,8 +14,8 @@ cityForm.addEventListener("submit", function (e) {
     getWeatherData(city);
 });
 
-cityButtons.forEach(function (button) {
-    button.addEventListener("click", function () {
+cityButtons.forEach(function(button) {
+    button.addEventListener("click", function() {
         var city = this.getAttribute("data-city");
         getWeatherData(city);
     });
@@ -25,34 +25,34 @@ function getWeatherData(city) {
     var apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
 
     fetch(apiURL)
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            console.log(data);
-            renderCurrentWeatherData(data);
-            getForecastData(data.coord.lat, data.coord.lon);
-        })
-        .catch(function (error) {
-            console.log(error);
-            clearWeatherData();
-        });
+    .then(function (response) {
+        return response.json();
+    })
+    .then(function (data) {
+        console.log(data);
+        renderCurrentWeatherData(data);
+        getForecastData(data.coord.lat, data.coord.lon);
+    })
+    .catch(function (error) {
+        console.log(error);
+        clearWeatherData();
+    });
 }
 
 function getForecastData(lat, lon) {
     var apiURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
 
     fetch(apiURL)
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            console.log(data);
-            renderForecastData(data);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+    .then(function (response) {
+        return response.json();
+    })
+    .then(function (data) {
+        console.log(data);
+        renderForecastData(data);
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
 }
 
 function renderCurrentWeatherData(weatherData) {
@@ -66,7 +66,7 @@ function renderForecastData(forecastData) {
     forecastContainer.innerHTML = '';
     var today = new Date().toISOString().split('T')[0];
     var dailyForecasts = {};
-    forecastData.list.forEach(function (forecast) {
+    forecastData.list.forEach(function(forecast) {
         var forecastDate = forecast.dt_txt.split(' ')[0];
         var temperature = forecast.main.temp;
         if (forecastDate >= today && forecastDate <= calculateFutureDate(today, 5)) {
