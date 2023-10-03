@@ -3,20 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Forecast</title>
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <form id="cityForm">
-        <label for="fname">City name:</label><br>
-        <input type="text" id="cityInput" name="fname" placeholder="Chicago"><br>
-        <input type="submit" value="Submit">
-    </form>
-    <div class="currentWeatherContainer">
-
+    <div class="container">
+        <form id="cityForm">
+            <label for="cityInput">City name:</label>
+            <input type="text" id="cityInput" placeholder="Enter city name">
+            <button type="submit">submit</button>
+        </form>
+        <div class="weather-info">
+            <h2 class="city-name"></h2>
+            <div class="weather-description"></div>
+            <div class="temperature"></div>
+            <div class="humidity"></div>
+        </div>
     </div>
-
-
-
 
     <script src="./script.js"></script>
 </body>

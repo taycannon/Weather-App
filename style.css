@@ -1,0 +1,39 @@
+/* body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+} */
+
+.container {
+    text-align: center;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+.weather-info {
+    margin-top: 20px;
+}
+
+.city-name {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.weather-description {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.temperature {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.humidity {
+    font-size: 18px;
+}
