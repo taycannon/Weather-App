@@ -8,19 +8,31 @@
 </head>
 <body>
     <div class="container">
-        <form id="cityForm">
-            <label for="cityInput">City name:</label>
-            <input type="text" id="cityInput" placeholder="Enter city name">
-            <button type="submit">submit</button>
-        </form>
-        <div class="weather-info">
-            <h2 class="city-name"></h2>
-            <div class="weather-description"></div>
-            <div class="temperature"></div>
-            <div class="humidity"></div>
+        <div class="left-panel">
+            <form id="cityForm">
+                <label for="cityInput">Enter City:</label>
+                <input type="text" id="cityInput" placeholder="Enter city name">
+                <button type="submit">submit</button>
+            </form>
+            <div class="city-list">
+                <button class="city-button" data-city="New York">New York</button>
+                <button class="city-button" data-city="Los Angeles">Los Angeles</button>
+                <button class="city-button" data-city="Chicago">Chicago</button>
+                <button class="city-button" data-city="Houston">Houston</button>
+                <button class="city-button" data-city="Miami">Miami</button>
+            </div>
+        </div>
+        <div class="right-panel">
+            <div class="weather-info">
+                <h2 class="city-name"></h2>
+                <div class="weather-description"></div>
+                <div class="temperature"></div>
+                <div class="humidity"></div>
+            </div>
+            <!-- <div class="forecast-container"></div> -->
         </div>
     </div>
-
     <script src="./script.js"></script>
 </body>
 </html>
+
