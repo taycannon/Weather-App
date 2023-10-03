@@ -6,7 +6,7 @@ var cityNameElement = document.querySelector(".city-name");
 var weatherDescriptionElement = document.querySelector(".weather-description");
 var temperatureElement = document.querySelector(".temperature");
 var humidityElement = document.querySelector(".humidity");
-// var forecastContainer = document.querySelector(".forecast-container");
+var forecastContainer = document.querySelector(".forecast-container");
 
 cityForm.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -14,8 +14,8 @@ cityForm.addEventListener("submit", function (e) {
     getWeatherData(city);
 });
 
-cityButtons.forEach(function(button) {
-    button.addEventListener("click", function() {
+cityButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
         var city = this.getAttribute("data-city");
         getWeatherData(city);
     });
@@ -25,34 +25,34 @@ function getWeatherData(city) {
     var apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
 
     fetch(apiURL)
-    .then(function (response) {
-        return response.json();
-    })
-    .then(function (data) {
-        console.log(data);
-        renderCurrentWeatherData(data);
-        getForecastData(data.coord.lat, data.coord.lon);
-    })
-    .catch(function (error) {
-        console.log(error);
-        clearWeatherData();
-    });
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            console.log(data);
+            renderCurrentWeatherData(data);
+            getForecastData(data.coord.lat, data.coord.lon);
+        })
+        .catch(function (error) {
+            console.log(error);
+            clearWeatherData();
+        });
 }
 
 function getForecastData(lat, lon) {
     var apiURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
 
     fetch(apiURL)
-    .then(function (response) {
-        return response.json();
-    })
-    .then(function (data) {
-        console.log(data);
-        renderForecastData(data);
-    })
-    .catch(function (error) {
-        console.log(error);
-    });
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            console.log(data);
+            renderForecastData(data);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 }
 
 function renderCurrentWeatherData(weatherData) {
@@ -65,15 +65,30 @@ function renderCurrentWeatherData(weatherData) {
 function renderForecastData(forecastData) {
     forecastContainer.innerHTML = '';
     var today = new Date().toISOString().split('T')[0];
-    forecastData.list.forEach(function(forecast) {
+    var dailyForecasts = {};
+    forecastData.list.forEach(function (forecast) {
         var forecastDate = forecast.dt_txt.split(' ')[0];
+        var temperature = forecast.main.temp;
         if (forecastDate >= today && forecastDate <= calculateFutureDate(today, 5)) {
-            var forecastItem = document.createElement("div");
-            forecastItem.textContent = `Date: ${forecast.dt_txt}, Temperature: ${forecast.main.temp}°F`;
-            forecastContainer.appendChild(forecastItem);
+            if (dailyForecasts[forecastDate]) {
+                dailyForecasts[forecastDate].totalTemp += temperature;
+                dailyForecasts[forecastDate].count++;
+            } else {
+                dailyForecasts[forecastDate] = {
+                    totalTemp: temperature,
+                    count: 1
+                };
+            }
         }
     });
+    for (var date in dailyForecasts) {
+        var averageTemp = Math.round(dailyForecasts[date].totalTemp / dailyForecasts[date].count);
+        var forecastItem = document.createElement("div");
+        forecastItem.textContent = `Date: ${date}, Average Temperature: ${averageTemp}°F`;
+        forecastContainer.appendChild(forecastItem);
+    }
 }
+
 
 function calculateFutureDate(startingDate, daysToAdd) {
     var futureDate = new Date(startingDate);
